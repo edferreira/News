@@ -6,6 +6,7 @@
  * @flow strict-local
  */
 
+import { useMachine } from '@xstate/react';
 import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
@@ -25,18 +26,14 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import axiosInstance from '../../api';
+import sourceMachine from '../../machines/sourceMachine';
 
 const Home = () => {
-  const [sources, setSources] = useState([]);
+  const [state, send] = useMachine(sourceMachine);
+  const { sources } = state.context;
 
   useEffect(() => {
-    axiosInstance.get('sources').then(r => {
-      console.log(r)
-      setSources(r.data.sources);
-    }).catch(e => {
-      console.log(e)
-      console.log(e.response)
-    })
+    send({ type: 'FETCH' });
   }, []);
 
   return (
@@ -44,7 +41,6 @@ const Home = () => {
       <FlatList
         data={sources}
         renderItem={({ item }) => {
-          console.log(item)
           return (
             <View>
               <Text>{item.name}</Text>
