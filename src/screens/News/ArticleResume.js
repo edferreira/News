@@ -7,12 +7,10 @@ const ArticleResume = ({ item }) => {
     <View style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.title}>{item.title}</Text>
-        <View style={styles.row}>
-          <Text style={styles.detail}>{`by ${item.author}`}</Text>
-          <Text style={styles.detail}>
-            {format(new Date(item.publishedAt), 'MM/dd/yyyy')}
-          </Text>
-        </View>
+        <Text style={[styles.author]}>{`by ${item.author}`}</Text>
+        <Text style={[styles.detail]}>
+          {format(new Date(item.publishedAt), 'MM/dd/yyyy')}
+        </Text>
         <Text>{item.description}</Text>
       </View>
       {item.urlToImage && item.urlToImage !== 'null' ? (
@@ -24,13 +22,15 @@ const ArticleResume = ({ item }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: 'white',
     borderRadius: 8,
     overflow: 'hidden',
   },
   content: {
+    flex: 1,
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 14,
   },
   image: { aspectRatio: 1.78, width: '100%', backgroundColor: 'gray' },
   title: {
@@ -39,13 +39,15 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginBottom: 8,
   },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  author: {
+    flexWrap: 'nowrap',
+    color: 'dimgray',
     marginBottom: 4,
   },
   detail: {
+    flexWrap: 'nowrap',
     color: 'dimgray',
+    marginBottom: 8,
   },
 });
 

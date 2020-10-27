@@ -21,8 +21,6 @@ const News = () => {
     send('LOAD_MORE');
   };
 
-  console.log(state)
-
   return (
     <MySafeAreaView>
       <MyFlatList
