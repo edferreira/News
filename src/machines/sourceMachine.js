@@ -1,5 +1,6 @@
 import { assign, createMachine } from 'xstate';
 import axiosInstance from '../api';
+import createSourcedArticlesMachine from './newsMachine';
 
 const fetchSources = async () => {
   try {
@@ -45,6 +46,18 @@ const sourceMachine = createMachine({
     },
     success: {},
     error: {},
+    selected: {},
+  },
+  on: {
+    SELECT: {
+      target: 'selected',
+      actions: assign((context, event) => {
+        const source = createSourcedArticlesMachine(event.id);
+        return {
+          source,
+        };
+      }),
+    },
   },
 });
 
